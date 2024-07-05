@@ -1,9 +1,11 @@
 import {
-  ForYouButton,
-  ItemTitle,
-  SecondaryNavBarWrapper,
+    ForYouButton,
+    ItemTitle,
+    SecondaryNavBarWrapper,
 } from "@/components/navbar/navbar.styles";
-import { useState } from "react";
+import Link from "next/link"; // Assuming you are using Next.js
+import React from "react";
+import { useEffect, useState } from "react";
 
 interface Item {
   key: string;
@@ -59,71 +61,53 @@ const itemsArray: Item[] = [
   },
 ];
 
-export default function ItemNavbar() {
-  const [activeItem, setActiveItem] = useState<string>("All");
+interface NavItemProps {
+  item: Item;
+  isActive: boolean;
+  onClick: () => void;
+}
 
-  const renderItems = itemsArray.map((item) => {
-    if (item.key === "for-you") {
-      return (
-        <ForYouButton
-          radius={"none"}
-          active={activeItem === "for-you"}
-          key={item.key}
-          onPress={() => setActiveItem(item.key)}
-        >
-          <a href={item.redirectTo}>{item.name}</a>
-        </ForYouButton>
-      );
-    }
-
+const NavItem: React.FC<NavItemProps> = React.memo(({ item, isActive, onClick }) => {
+  if (item.key === "for-you") {
     return (
-      <ItemTitle
-        key={item.key}
-        active={activeItem === item.key}
-        onClick={() => setActiveItem(item.key)}
+      <ForYouButton
+        radius="none"
+        active={isActive}
+        onClick={onClick}
       >
-        <a href={item.redirectTo}>{item.name}</a>
-      </ItemTitle>
+        <Link href={item.redirectTo}>{item.name}</Link>
+      </ForYouButton>
     );
+  }
 
-    // if (item === "For you" && activeItem === "For you") {
-    //   return (
-    //     <ForYouButton
-    //       radius={"none"}
-    //       active={true}
-    //       key={item}
-    //       onPress={() => setActiveItem(item)}
-    //     >
-    //       <a href="#">{item}</a>
-    //     </ForYouButton>
-    //   );
-    // } else if (item === "For you") {
-    //   return (
-    //     <ForYouButton
-    //       radius={"none"}
-    //       key={item}
-    //       onPress={() => setActiveItem(item)}
-    //     >
-    //       <a href="#">{item}</a>
-    //     </ForYouButton>
-    //   );
-    // } else if (item === activeItem) {
-    //   return (
-    //     <ItemTitle key={item} active={true} onClick={() => setActiveItem(item)}>
-    //       <a href="#">{item}</a>
-    //     </ItemTitle>
-    //   );
-    // } else {
-    //   return (
-    //     <ItemTitle
-    //       key={item}
-    //       active={false}
-    //       onClick={() => setActiveItem(item)}
-    //     >
-    //       <a href="#">{item}</a>
-    //     </ItemTitle>
-    //   );
-    // }
-  });
-  return <SecondaryNavBarWrapper>{renderItems}</SecondaryNavBarWrapper>;
+  return (
+    <ItemTitle
+      active={isActive}
+      onClick={onClick}
+    >
+      <Link href={item.redirectTo}>{item.name}</Link>
+    </ItemTitle>
+  );
+});
+
+
+export default function ItemNavbar() {
+  const [activeItem, setActiveItem] = useState<string>("all");
+
+  const handleItemClick = (key: string) => {
+    setActiveItem(key);
+  };
+
+  return (
+    <SecondaryNavBarWrapper>
+      {itemsArray.map((item) => (
+        <NavItem
+          key={item.key}
+          item={item}
+          isActive={activeItem === item.key}
+          onClick={() => handleItemClick(item.key)}
+        />
+      ))}
+    </SecondaryNavBarWrapper>
+  );
 }
