@@ -2,6 +2,7 @@
 import NavBar from "@/components/navbar/navbar";
 import ItemNavbar from "@/components/navbar/secondary-navbar";
 import { ItemSection } from "@/components/item-section/item-section";
+import Footer from "@/components/footer/footer";
 
 export default function ForYouPage() {
   return (
@@ -32,6 +33,7 @@ export default function ForYouPage() {
         fromColor={"from-yellow-500"}
         toColor={"to-orange-300"}
       />
+      <Footer/>
     </>
   );
 }

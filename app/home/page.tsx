@@ -3,6 +3,7 @@ import NavBar from "@/components/navbar/navbar";
 import ItemNavbar from "@/components/navbar/secondary-navbar";
 import Carousel from "@/components/home-carousel/home-carousel";
 import { ItemSection } from "@/components/item-section/item-section";
+import Footer from "@/components/footer/footer";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         fromColor={"from-green-300"}
         toColor={"to-indigo-200"}
       />
+      <Footer/>
     </>
   );
 }
