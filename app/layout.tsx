@@ -16,6 +16,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    {/* Preconnect to Google Fonts and Fonts.gstatic.com */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+    {/* Link to Google Fonts */}
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet"
+    />
       <body className={inter.className}>{children}</body>
     </html>
   );
