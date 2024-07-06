@@ -1,43 +1,59 @@
-import React from "react";
-import { NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
-import Logo from '@/public/icons/logo.svg'
-import SearchIcon from '@/public/icons/search.svg'
+import React, { useState } from "react";
+import { NavbarContent, NavbarItem } from "@nextui-org/react";
+import Logo from "@/public/icons/logo.svg";
+import SearchIcon from "@/public/icons/search.svg";
 import {
-    NavBarWrapper,
-    NavBrandWrapper,
-    NavTitle,
-    SearchBox,
-    LogoutButton,
-    SearchText, SearchButton, SearchWrapper
+  LogoutButton,
+  NavBarWrapper,
+  NavBrandWrapper,
+  NavTitle,
+  SearchBox,
+  SearchButton,
+  SearchWrapper,
 } from "@/components/navbar/navbar.styles";
 
-export default function Navbar() {
-    return (
-        <NavBarWrapper>
-            <NavBrandWrapper>
-                <Logo />
-                <NavTitle>TrendCart</NavTitle>
-            </NavBrandWrapper>
-            <NavbarContent>
-                <SearchWrapper>
-                    <SearchBox
-                        radius={'full'}
-                        type='search'
-                        label=""
-                        placeholder="Search for a product"
-                        startContent={<SearchIcon/>}
-                        onMouseEnter={() => console.log('search!')}
-                    endContent={<SearchButton>Search</SearchButton>}/>
+interface NavbarProps {
+  searchQuery?: string;
+}
 
-                </SearchWrapper>
-            </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem>
-                    <LogoutButton href="#" radius={'sm'}>
-                        Logout
-                    </LogoutButton>
-                </NavbarItem>
-            </NavbarContent>
-        </NavBarWrapper>
-    );
+export default function Navbar({ searchQuery = "" }: NavbarProps) {
+  const [query, setQuery] = useState(searchQuery);
+
+  const handleSearch = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    window.location.href = `/search?q=${query}`;
+  };
+
+  return (
+    <NavBarWrapper>
+      <NavBrandWrapper>
+        <Logo />
+        <NavTitle>TrendCart</NavTitle>
+      </NavBrandWrapper>
+      <NavbarContent>
+        <form onSubmit={handleSearch}>
+          <SearchWrapper>
+            <SearchBox
+              radius={"full"}
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              label=""
+              placeholder="Search for a product"
+              startContent={<SearchIcon />}
+              onMouseEnter={() => console.log("search!")}
+              endContent={<SearchButton>Search</SearchButton>}
+            />
+          </SearchWrapper>
+        </form>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <LogoutButton href="#" radius={"sm"}>
+            Logout
+          </LogoutButton>
+        </NavbarItem>
+      </NavbarContent>
+    </NavBarWrapper>
+  );
 }
