@@ -1,8 +1,8 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 import { getToken } from "./token-utils";
 
 const apiService = axios.create({
-  baseURL: process.env.API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_HOST,
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,7 +10,7 @@ const apiService = axios.create({
 
 apiService.interceptors.request.use(
   async (
-    config: InternalAxiosRequestConfig<any>
+    config: InternalAxiosRequestConfig<any>,
   ): Promise<InternalAxiosRequestConfig<any>> => {
     const newToken = getToken();
     if (newToken) {
@@ -21,7 +21,7 @@ apiService.interceptors.request.use(
   async (error): Promise<any> => {
     console.log("req error: ", error);
     return await Promise.reject(error.message);
-  }
+  },
 );
 
 apiService.interceptors.response.use(
@@ -38,7 +38,7 @@ apiService.interceptors.response.use(
       window.location.href = "/sign-up";
     }
     return await Promise.reject(error);
-  }
+  },
 );
 
 export default apiService;

@@ -6,20 +6,19 @@ import Footer from "@/components/footer/footer";
 import { ProductAPIService } from "@/services/products/products-api-services";
 import { useEffect, useState } from "react";
 import { GetProductSuccessData } from "@/types/services/product";
-import { getPopularItems } from "./helper";
 
 export default function ForYouPage() {
   const [dailyPicks, setDailyPicks] = useState<GetProductSuccessData[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const getDailyPickProducts = async () => {
     try {
-      const getProducts = await ProductAPIService.getProducts();
+      const getProducts = await ProductAPIService.getForYouRecommendations();
       if (getProducts) {
-        const popularItems = getPopularItems(getProducts.data).slice(0, 6);
-        console.log("popularItems:", popularItems);
-        setDailyPicks(popularItems);
+        setDailyPicks(getProducts.data);
+        setIsLoading(false);
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching for you recommendations products:", error);
     }
   };
 
@@ -32,30 +31,24 @@ export default function ForYouPage() {
       <NavBar />
       <ItemNavbar />
 
-      <ItemSection
-        sectionTitle={"Daily trendy picks"}
-        fromColor={"from-purple-300"}
-        toColor={"to-pink-300"}
-        items={dailyPicks}
-      />
+      {isLoading && (
+        <div className="min-h-screen flex items-center justify-center bg-[#001F3E] text-white">
+          <div className="flex flex-col items-center">
+            <div className="loader ease-linear rounded-full border-8 border-t-8 border-[#f60457] h-12 w-12 mb-4"></div>
+            <h2 className="text-xl">Loading recommendations for you...</h2>
+          </div>
+        </div>
+      )}
 
-      <ItemSection
-        sectionTitle={"Continue searching"}
-        fromColor={"from-pink-500"}
-        toColor={"to-blue-100"}
-      />
+      {dailyPicks && (
+        <ItemSection
+          sectionTitle={"We think you'll love these!"}
+          fromColor={"from-purple-300"}
+          toColor={"to-pink-300"}
+          items={dailyPicks}
+        />
+      )}
 
-      <ItemSection
-        sectionTitle={"From your favourite brands!"}
-        fromColor={"from-green-200"}
-        toColor={"to-blue-300"}
-      />
-
-      <ItemSection
-        sectionTitle={"Products for your wallet"}
-        fromColor={"from-yellow-500"}
-        toColor={"to-orange-300"}
-      />
       <Footer />
     </>
   );

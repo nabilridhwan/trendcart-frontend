@@ -26,9 +26,9 @@ export default function RootLayout({
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet"
       />
-      {/* <Suspense> */}
-      <body className={inter.className}>{children}</body>
-      {/* </Suspense> */}
+      <Suspense>
+        <body className={inter.className}>{children}</body>
+      </Suspense>
     </html>
   );
 }

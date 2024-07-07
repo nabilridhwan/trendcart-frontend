@@ -20,6 +20,17 @@ export namespace ProductAPIService {
     }
   }
 
+  export async function getForYouRecommendations() {
+    try {
+      const url = `/api/recommendation/for-you`;
+      const response = await apiService.get(url);
+      return response.data as GetProductsSuccessResponse;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  }
+
   export async function getProducts(params: GetProductsParams = {}) {
     try {
       const { query, price_high, price_low } = params;

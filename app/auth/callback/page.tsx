@@ -21,8 +21,7 @@ const AuthCallbackPage = () => {
 
         if (response?.statusCode === 200) {
           await AuthAPIService.postLogin({
-            tiktok_access_token:
-              "act.pxUT43GvGIZMkWULbLwWAoxcjRvjbLj6A8Q5L6aYCcmHgAPqWrlIQtZazIQf!6174.va",
+            tiktok_access_token: response.data.access_token,
           });
           const tokenData = {
             open_id: response.data.open_id,
