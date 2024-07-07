@@ -16,7 +16,7 @@ export namespace CartAPIService {
       return response.data as GetCartSuccessResponse;
     } catch (error) {
       console.error("Error fetching cart:", error);
-      throw error;
+      return null;
     }
   }
 
@@ -29,7 +29,7 @@ export namespace CartAPIService {
       return response.data as AddCartSuccessResponse;
     } catch (error) {
       console.error("Error adding to cart:", error);
-      throw error;
+      return null;
     }
   }
 
@@ -43,7 +43,7 @@ export namespace CartAPIService {
       return response.data as UpdateCartItemResponse;
     } catch (error) {
       console.error("Error updating cart:", error);
-      throw error;
+      return null;
     }
   }
   export async function removeCart(
@@ -55,7 +55,7 @@ export namespace CartAPIService {
       return response.data as DeleteCartItemResponse;
     } catch (error) {
       console.error("Error removing item from cart:", error);
-      throw error;
+      return null;
     }
   }
 }

@@ -12,7 +12,7 @@ export namespace PurchaseAPIService {
       return response.status;
     } catch (error) {
       console.error("Error making a purchase:", error);
-      throw error;
+      return;
     }
   }
 
@@ -23,7 +23,7 @@ export namespace PurchaseAPIService {
       return response.data as GetAllPurchasesSuccessResponse;
     } catch (error) {
       console.error("Error fetching all purchases:", error);
-      throw error;
+      return;
     }
   }
 
@@ -34,7 +34,7 @@ export namespace PurchaseAPIService {
       return response.data as GetOnePurchasesSuccessResponse;
     } catch (error) {
       console.error("Error fetching a required purchase:", error);
-      throw error;
+      return;
     }
   }
 }
