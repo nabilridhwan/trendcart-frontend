@@ -43,7 +43,7 @@ export namespace ProductAPIService {
       return response.data as GetOneProductSuccessResponse;
     } catch (error) {
       console.error("Error a product:", error);
-      throw error;
+      return;
     }
   }
 
@@ -55,7 +55,7 @@ export namespace ProductAPIService {
       return response.data as PostReviewSuccessResponse;
     } catch (error) {
       console.error("Error a product:", error);
-      throw error;
+      return;
     }
   }
 
@@ -66,7 +66,7 @@ export namespace ProductAPIService {
       return response.data as GetAllProductCategorySuccessResponse;
     } catch (error) {
       console.error("Error fetching categories:", error);
-      throw error;
+      return;
     }
   }
 }
