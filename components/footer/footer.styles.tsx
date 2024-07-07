@@ -5,6 +5,7 @@ export const FooterWrapper = styled.footer`
   padding: 20px 0;
   text-align: center;
   border-top: 1px solid #e7e7e7;
+  margin-top: auto;
 `;
 
 export const FooterContainer = styled.div`

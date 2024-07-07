@@ -28,9 +28,14 @@ apiService.interceptors.response.use(
   (response) => {
     return response;
   },
-  async (error: AxiosError) => {
+  async (error) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
       window.location.href = "/login";
+    } else if (
+      error.response?.status === 400 &&
+      error.response?.data.message === "User not found"
+    ) {
+      window.location.href = "/sign-up";
     }
     return await Promise.reject(error);
   }

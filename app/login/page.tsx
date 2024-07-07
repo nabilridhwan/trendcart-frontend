@@ -15,23 +15,13 @@ function generateTikTokLoginLink() {
   url += "&response_type=code";
   url += "&redirect_uri=" + process.env.NEXT_PUBLIC_TIKTOK_DEV_REDIRECT_URI!;
   url += "&state=" + csrfState;
-  // url += `&code_challenge=${CODE_VERIFIER}`;
-  // url += '&code_challenge_method=S256';
 
   console.log(url);
-
-  // res.redirect(url);
   return url;
 }
 
 export default function Login() {
   const handleLogin = () => {
-    // const userInfo = {
-    //   email: "Peggie_Schoen85@gmail.com",
-    //   password: "ABC123213123",
-    // };
-    // AuthAPIService.postLogin(userInfo);
-
     window.location.href = generateTikTokLoginLink();
   };
 
