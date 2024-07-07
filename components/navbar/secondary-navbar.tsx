@@ -1,11 +1,10 @@
 import {
-    ForYouButton,
-    ItemTitle,
-    SecondaryNavBarWrapper,
+  ForYouButton,
+  ItemTitle,
+  SecondaryNavBarWrapper,
 } from "@/components/navbar/navbar.styles";
 import Link from "next/link"; // Assuming you are using Next.js
-import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Item {
   key: string;
@@ -67,29 +66,21 @@ interface NavItemProps {
   onClick: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = React.memo(({ item, isActive, onClick }) => {
+const NavItem = ({ item, isActive, onClick }: NavItemProps) => {
   if (item.key === "for-you") {
     return (
-      <ForYouButton
-        radius="none"
-        active={isActive}
-        onClick={onClick}
-      >
+      <ForYouButton radius="none" active={isActive} onClick={onClick}>
         <Link href={item.redirectTo}>{item.name}</Link>
       </ForYouButton>
     );
   }
 
   return (
-    <ItemTitle
-      active={isActive}
-      onClick={onClick}
-    >
+    <ItemTitle active={isActive} onClick={onClick}>
       <Link href={item.redirectTo}>{item.name}</Link>
     </ItemTitle>
   );
-});
-
+};
 
 export default function ItemNavbar() {
   const [activeItem, setActiveItem] = useState<string>("all");
