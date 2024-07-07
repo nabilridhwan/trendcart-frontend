@@ -67,23 +67,21 @@ interface NavItemProps {
   onClick: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = React.memo(
-  ({ item, isActive, onClick }) => {
-    if (item.key === "for-you") {
-      return (
-        <ForYouButton radius="none" active={isActive} onClick={onClick}>
-          <Link href={item.redirectTo}>{item.name}</Link>
-        </ForYouButton>
-      );
-    }
-
+const NavItem: React.FC<NavItemProps> = ({ item, isActive, onClick }) => {
+  if (item.key === "for-you") {
     return (
-      <ItemTitle active={isActive} onClick={onClick}>
+      <ForYouButton radius="none" active={isActive} onClick={onClick}>
         <Link href={item.redirectTo}>{item.name}</Link>
-      </ItemTitle>
+      </ForYouButton>
     );
   }
-);
+
+  return (
+    <ItemTitle active={isActive} onClick={onClick}>
+      <Link href={item.redirectTo}>{item.name}</Link>
+    </ItemTitle>
+  );
+};
 
 export default function ItemNavbar() {
   const [activeItem, setActiveItem] = useState<string>();
