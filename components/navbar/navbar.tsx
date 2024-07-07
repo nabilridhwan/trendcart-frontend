@@ -11,6 +11,7 @@ import {
   SearchButton,
   SearchWrapper,
 } from "@/components/navbar/navbar.styles";
+import { RiSparklingFill } from "react-icons/ri";
 
 interface NavbarProps {
   searchQuery?: string;
@@ -22,6 +23,10 @@ export default function Navbar({ searchQuery = "" }: NavbarProps) {
   const handleSearch = (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     window.location.href = `/search?q=${query}`;
+  };
+
+  const redirectToLLMSearch = () => {
+    window.location.href = `/search?q=${query}&llm=true`;
   };
 
   return (
@@ -39,10 +44,25 @@ export default function Navbar({ searchQuery = "" }: NavbarProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               label=""
-              placeholder="Search for a product"
+              placeholder="Search"
               startContent={<SearchIcon />}
               onMouseEnter={() => console.log("search!")}
-              endContent={<SearchButton type="submit">Search</SearchButton>}
+              endContent={
+                <div className={"flex gap-1"}>
+                  <SearchButton
+                    title="We use your search query to find products that match your interests."
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      redirectToLLMSearch();
+                    }}
+                    type="button"
+                  >
+                    <RiSparklingFill />
+                    AI Search
+                  </SearchButton>
+                  <SearchButton type="submit">Search</SearchButton>
+                </div>
+              }
             />
           </SearchWrapper>
         </form>
