@@ -1,6 +1,12 @@
-import axios from "axios";
+import {
+  GetAllProductCategorySuccessResponse,
+  GetOneProductSuccessResponse,
+  GetProductsParams,
+  GetProductsSuccessResponse,
+  PostReviewSuccessResponse,
+  ReviewObject,
+} from "@/types/services/product";
 import apiService from "../../utils/service-utils";
-import { GetProductsParams, ReviewObject } from "@/types/services/product";
 
 export namespace ProductAPIService {
   export async function getProducts(params: GetProductsParams = {}) {
@@ -24,7 +30,7 @@ export namespace ProductAPIService {
       }`;
 
       const response = await apiService.get(url);
-      return response.data.data;
+      return response.data as GetProductsSuccessResponse;
     } catch (error) {
       return null;
     }
@@ -32,12 +38,9 @@ export namespace ProductAPIService {
 
   export async function getOneProduct(product_id: number) {
     try {
-      const searchParams = new URLSearchParams();
-
       const url = `/api/product/${product_id}`;
-
       const response = await apiService.get(url);
-      return response.data;
+      return response.data as GetOneProductSuccessResponse;
     } catch (error) {
       console.error("Error a product:", error);
       throw error;
@@ -46,12 +49,10 @@ export namespace ProductAPIService {
 
   export async function postReview(product_id: number, body: ReviewObject) {
     try {
-      const searchParams = new URLSearchParams();
-
       const url = `/api/product/${product_id}/review`;
 
       const response = await apiService.post(url, body);
-      return response.data;
+      return response.data as PostReviewSuccessResponse;
     } catch (error) {
       console.error("Error a product:", error);
       throw error;
@@ -62,7 +63,7 @@ export namespace ProductAPIService {
     try {
       const url = `/api/category`;
       const response = await apiService.get(url);
-      return response.data;
+      return response.data as GetAllProductCategorySuccessResponse;
     } catch (error) {
       console.error("Error fetching categories:", error);
       throw error;

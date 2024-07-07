@@ -19,7 +19,7 @@ export namespace AuthAPIService {
     try {
       const url = `/api/auth/signup`;
       const response = await apiService.post(url, body);
-      return response.status;
+      return response.data;
     } catch (error) {
       console.error("Error signing up:", error);
       throw error;

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { FindUserSuccessResponse } from "@/types/services/user";
 import apiService from "../../utils/service-utils";
 
 export namespace UsersAPIService {
@@ -6,7 +6,7 @@ export namespace UsersAPIService {
     try {
       const url = `/api/users/${user_id}`;
       const response = await apiService.get(url);
-      return response.data;
+      return response.data as FindUserSuccessResponse;
     } catch (error) {
       console.error("Error fetching user data:", error);
       throw error;

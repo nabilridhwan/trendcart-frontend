@@ -1,4 +1,7 @@
-import axios from "axios";
+import {
+  GetAllPurchasesSuccessResponse,
+  GetOnePurchasesSuccessResponse,
+} from "@/types/services/purchase";
 import apiService from "../../utils/service-utils";
 
 export namespace PurchaseAPIService {
@@ -17,7 +20,7 @@ export namespace PurchaseAPIService {
     try {
       const url = `/api/purchase`;
       const response = await apiService.get(url);
-      return response.data;
+      return response.data as GetAllPurchasesSuccessResponse;
     } catch (error) {
       console.error("Error fetching all purchases:", error);
       throw error;
@@ -28,7 +31,7 @@ export namespace PurchaseAPIService {
     try {
       const url = `/api/purchase/${purchase_id}`;
       const response = await apiService.get(url);
-      return response.data;
+      return response.data as GetOnePurchasesSuccessResponse;
     } catch (error) {
       console.error("Error fetching a required purchase:", error);
       throw error;
