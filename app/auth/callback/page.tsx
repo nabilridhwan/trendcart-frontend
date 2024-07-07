@@ -31,7 +31,7 @@ const AuthCallbackPage = () => {
             display_name: response.data.display_name,
           };
 
-          localStorage.setItem("tokenData", JSON.stringify(tokenData));
+          localStorage?.setItem("tokenData", JSON.stringify(tokenData));
         }
       } catch (error) {
         console.error("Error occurred:", error);
