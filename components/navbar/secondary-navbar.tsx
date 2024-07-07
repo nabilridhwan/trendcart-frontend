@@ -67,23 +67,23 @@ interface NavItemProps {
 }
 
 const NavItem = ({ item, isActive, onClick }: NavItemProps) => {
-  if (item.key === "for-you") {
-    return (
+    if (item.key === "for-you") {
+      return (
       <ForYouButton radius="none" active={isActive} onClick={onClick}>
-        <Link href={item.redirectTo}>{item.name}</Link>
-      </ForYouButton>
-    );
-  }
+          <Link href={item.redirectTo}>{item.name}</Link>
+        </ForYouButton>
+      );
+    }
 
-  return (
+    return (
     <ItemTitle active={isActive} onClick={onClick}>
-      <Link href={item.redirectTo}>{item.name}</Link>
-    </ItemTitle>
-  );
+        <Link href={item.redirectTo}>{item.name}</Link>
+      </ItemTitle>
+    );
 };
 
 export default function ItemNavbar() {
-  const [activeItem, setActiveItem] = useState<string>("all");
+  const [activeItem, setActiveItem] = useState<string>();
 
   const handleItemClick = (key: string) => {
     setActiveItem(key);

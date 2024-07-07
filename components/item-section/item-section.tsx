@@ -3,6 +3,7 @@ interface ItemSectionProps {
   fromColor: string;
   toColor: string;
   type?: "grid" | "singlerow" | "separatedrows";
+  items?: any[];
 }
 
 interface ProductCardProps {
@@ -20,14 +21,17 @@ interface ProductCardProps {
  */
 const ProductCard = ({ name, price, image }: ProductCardProps) => {
   return (
-    <div
-      className={
-        "bg-white rounded-3xl w-[130px] aspect-square flex flex-col justify-center items-center"
-      }
-    >
-      <img src={image} alt={name} className={"w-[110px]"} />
-      {/*<p className={"text-lg font-bold"}>{name}</p>*/}
-      {/*<p className={"text-lg font-bold"}>{price}</p>*/}
+    <div className="bg-white rounded-3xl w-[130px] aspect-square flex flex-col justify-center items-center p-2">
+      <img src={image} alt={name} className="w-[110px] rounded-3xl mb-2" />
+      <p
+        className="text-xs font-bold break-words text-center mb-2"
+        style={{ fontSize: "10px" }}
+      >
+        {name}
+      </p>
+      <p className="text-xs font-bold text-center" style={{ fontSize: "10px" }}>
+        ${price}
+      </p>
     </div>
   );
 };
@@ -43,6 +47,7 @@ export const ItemSection = ({
   sectionTitle,
   fromColor,
   toColor,
+  items,
 }: ItemSectionProps) => {
   return (
     <div className={"m-8 my-10"}>
@@ -53,16 +58,13 @@ export const ItemSection = ({
         <div
           className={"grid lg:grid-cols-6 gap-10 rounded-2xl bg-white/40 p-10"}
         >
-          {Array(12)
-            .fill(0)
-            .map((_, index) => (
+          {items &&
+            items.map((item) => (
               <ProductCard
-                key={index}
-                name={"Chair"}
-                price={1000}
-                image={
-                  "https://www.bludot.com/media/catalog/product/f/d/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush_2.jpg?optimize=medium&fit=bounds&height=1200&width=1500&canvas=1500:1200"
-                }
+                key={item}
+                name={item.name}
+                price={item.price}
+                image={item.ProductImage[0].image_url}
               />
             ))}
         </div>
