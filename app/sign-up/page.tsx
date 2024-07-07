@@ -1,11 +1,17 @@
 "use client";
 import { AuthAPIService } from "@/services/auth/auth-api-service";
 import { ObtainTokenSuccessResponse, SignUpBody } from "@/types/services/auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+interface userDataProps {
+  open_id: string;
+  access_token: string;
+  avatar_url: string;
+  display_name: string;
+}
 
 export default function SignUp() {
-  const getUserData = localStorage.getItem("tokenData");
-  const userData = JSON.parse(getUserData || "");
+  const [userData, setUserData] = useState<userDataProps>();
   const [formData, setFormData] = useState({
     username: userData?.display_name || "",
     email: "",
@@ -18,6 +24,13 @@ export default function SignUp() {
     state: "",
     remarks: "",
   });
+
+  useEffect(() => {
+    const getUserData = localStorage?.getItem("tokenData");
+    if (getUserData) {
+      setUserData(JSON.parse(getUserData));
+    }
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
