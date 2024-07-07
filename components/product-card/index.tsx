@@ -15,7 +15,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       }
     >
       <img
-        className={"aspect-square w-full"}
+        className={"aspect-square w-full rounded-md"}
         src={
           product.ProductImage[0]?.image_url ||
           "https://via.placeholder.com/150"
@@ -31,8 +31,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         <span>
           <Rating
             rating={
-              product.Reviews.reduce((prev, curr) => prev + curr.rating, 0) /
-              product.Reviews.length
+              product.Reviews.reduce(
+                (prev: any, curr: { rating: any }) => prev + curr.rating,
+                0
+              ) / product.Reviews.length
             }
           />
 
