@@ -1,7 +1,8 @@
 import Rating from "@/components/rating";
+import { SAMPLE_PRODUCT } from "@/sample-data/Product";
 
 interface ProductCardProps {
-  product: any; // TODO: PLEASE CHANGE!!!
+  product: typeof SAMPLE_PRODUCT; // TODO: PLEASE CHANGE!!!
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
