@@ -1,8 +1,10 @@
 "use client";
 import NavBar from "@/components/navbar/navbar";
 import ItemNavbar from "@/components/navbar/secondary-navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Rating from "@/components/rating";
+import { ProductAPIService } from "@/services/products/products-api-services";
+import { GetProductSuccessData } from "@/types/services/product";
 
 const SAMPLE_PRODUCT = {
   product_id: 4,
@@ -71,15 +73,34 @@ export default function ProductDetailPage({
   params: { id: string };
 }) {
   const id = +params.id;
+  const [product, setProduct] = useState<GetProductSuccessData>();
 
-  const product = SAMPLE_PRODUCT;
+  const getProductDetails = async () => {
+    try {
+      const getProduct = await ProductAPIService.getOneProduct(id);
+      if (getProduct) {
+        const product = getProduct.data;
+        setProduct(product);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
-  const numberOfRatings = product.Reviews.length;
+  useEffect(() => {
+    getProductDetails();
+  }, []);
+
+  // const product = SAMPLE_PRODUCT;
+
+  const numberOfRatings = product?.Reviews?.length;
 
   const averageRating =
-    product.Reviews.reduce(
+    product &&
+    numberOfRatings &&
+    product?.Reviews?.reduce(
       (previousValue, currentValue) => previousValue + currentValue.rating,
-      0,
+      0
     ) / numberOfRatings;
 
   const [quantity, setQuantity] = useState(1);
@@ -115,29 +136,33 @@ export default function ProductDetailPage({
 
       <div className={"container mx-auto my-4"}>
         <div className={"grid grid-cols-2"}>
-          <div>
+          <div className="flex justify-center items-center">
             <img
-              className={"aspect-square max-w-full"}
-              src={product.ProductImage[0].image_url}
-              alt={product.name}
+              className="aspect-square max-w-full"
+              src={product?.ProductImage[0].image_url}
+              alt={product?.name}
             />
           </div>
 
           <div className={"space-y-2 p-5"}>
             <section className={" rounded-2xl p-5 border-1 border-black/10"}>
-              <h3 className={"font-bold text-xl"}>{product.name}</h3>
+              <h3 className={"font-bold text-xl"}>{product?.name}</h3>
 
               <span className={"flex gap-2 my-2 items-center"}>
-                {averageRating} <Rating rating={averageRating} />{" "}
+                {averageRating} <Rating rating={averageRating || 0} />{" "}
                 <span className={"text-sm"}>{numberOfRatings} Review(s)</span>
               </span>
 
               <div className={"space-y-3"}>
-                <h1 className={"font-bold text-2xl mb-8"}>${product.price}</h1>
+                <h1 className={"font-bold text-2xl mb-8"}>${product?.price}</h1>
 
                 <div className={"flex gap-10"}>
                   <p className={"text-opacity-70 text-black"}>Category</p>
-                  <p>{capitalizeFirstLetter(product.Category.name)}</p>
+                  <p>
+                    {capitalizeFirstLetter(
+                      product?.Category?.name || "unknown"
+                    )}
+                  </p>
                 </div>
 
                 <div className={"flex gap-10"}>
@@ -192,7 +217,7 @@ export default function ProductDetailPage({
             <div className={"rounded-2xl p-5 border-1 border-black/10"}>
               <h3 className={"text-md font-bold"}>Product Description</h3>
 
-              <p>{product.description}</p>
+              <p>{product?.description}</p>
             </div>
 
             <div
@@ -202,18 +227,18 @@ export default function ProductDetailPage({
                 Reviews ({numberOfRatings})
               </h3>
 
-              {product.Reviews.length === 0 && <p>No reviews yet.</p>}
+              {product?.Reviews.length === 0 && <p>No reviews yet.</p>}
 
-              {product.Reviews.map((review) => (
+              {product?.Reviews.map((review) => (
                 <div
-                  key={review.review_id}
+                  key={review?.review_id || ""}
                   className={"border-1 rounded-xl p-3"}
                 >
                   <div className={"flex gap-2"}>
-                    <p className={"font-bold"}>{review.User.username}</p>
+                    <p className={"font-bold"}>{review?.User?.username}</p>
                   </div>
                   <Rating rating={review.rating} />
-                  <p>{review.review_text}</p>
+                  <p>{review?.review_text}</p>
                 </div>
               ))}
             </div>

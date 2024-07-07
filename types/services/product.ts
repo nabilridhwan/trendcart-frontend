@@ -2,8 +2,10 @@
 // INTERFACES
 // =============================================================================
 export interface ReviewObject {
+  review_id: number;
   rating: number;
-  review: string;
+  review_text: string;
+  User: UserObject;
 }
 
 export interface ProductImageObject {
@@ -12,6 +14,10 @@ export interface ProductImageObject {
   image_url: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface UserObject {
+  username: string;
 }
 
 // =============================================================================

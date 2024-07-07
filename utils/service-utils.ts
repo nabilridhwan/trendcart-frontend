@@ -1,6 +1,4 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import { getToken } from "./token-utils";
 
 const apiService = axios.create({

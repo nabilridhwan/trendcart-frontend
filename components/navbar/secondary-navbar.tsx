@@ -1,7 +1,7 @@
 import {
-    ForYouButton,
-    ItemTitle,
-    SecondaryNavBarWrapper,
+  ForYouButton,
+  ItemTitle,
+  SecondaryNavBarWrapper,
 } from "@/components/navbar/navbar.styles";
 import Link from "next/link"; // Assuming you are using Next.js
 import React from "react";
@@ -67,32 +67,26 @@ interface NavItemProps {
   onClick: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = React.memo(({ item, isActive, onClick }) => {
-  if (item.key === "for-you") {
+const NavItem: React.FC<NavItemProps> = React.memo(
+  ({ item, isActive, onClick }) => {
+    if (item.key === "for-you") {
+      return (
+        <ForYouButton radius="none" active={isActive} onClick={onClick}>
+          <Link href={item.redirectTo}>{item.name}</Link>
+        </ForYouButton>
+      );
+    }
+
     return (
-      <ForYouButton
-        radius="none"
-        active={isActive}
-        onClick={onClick}
-      >
+      <ItemTitle active={isActive} onClick={onClick}>
         <Link href={item.redirectTo}>{item.name}</Link>
-      </ForYouButton>
+      </ItemTitle>
     );
   }
-
-  return (
-    <ItemTitle
-      active={isActive}
-      onClick={onClick}
-    >
-      <Link href={item.redirectTo}>{item.name}</Link>
-    </ItemTitle>
-  );
-});
-
+);
 
 export default function ItemNavbar() {
-  const [activeItem, setActiveItem] = useState<string>("all");
+  const [activeItem, setActiveItem] = useState<string>();
 
   const handleItemClick = (key: string) => {
     setActiveItem(key);

@@ -42,7 +42,7 @@ export default function Navbar({ searchQuery = "" }: NavbarProps) {
               placeholder="Search for a product"
               startContent={<SearchIcon />}
               onMouseEnter={() => console.log("search!")}
-              endContent={<SearchButton>Search</SearchButton>}
+              endContent={<SearchButton type="submit">Search</SearchButton>}
             />
           </SearchWrapper>
         </form>
