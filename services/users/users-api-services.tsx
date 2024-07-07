@@ -9,7 +9,7 @@ export namespace UsersAPIService {
       return response.data as FindUserSuccessResponse;
     } catch (error) {
       console.error("Error fetching user data:", error);
-      throw error;
+      return;
     }
   }
 }
