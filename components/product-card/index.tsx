@@ -1,7 +1,8 @@
 import Rating from "@/components/rating";
+import { GetProductSuccessData } from "@/types/services/product";
 
 interface ProductCardProps {
-  product: any; // TODO: PLEASE CHANGE!!!
+  product: GetProductSuccessData; // TODO: PLEASE CHANGE!!!
 }
 
 export default function ProductCard({ product }: ProductCardProps) {

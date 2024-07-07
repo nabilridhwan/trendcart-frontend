@@ -4,8 +4,7 @@ import {
   SecondaryNavBarWrapper,
 } from "@/components/navbar/navbar.styles";
 import Link from "next/link"; // Assuming you are using Next.js
-import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Item {
   key: string;
@@ -67,20 +66,20 @@ interface NavItemProps {
   onClick: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ item, isActive, onClick }) => {
-  if (item.key === "for-you") {
-    return (
+const NavItem = ({ item, isActive, onClick }: NavItemProps) => {
+    if (item.key === "for-you") {
+      return (
       <ForYouButton radius="none" active={isActive} onClick={onClick}>
-        <Link href={item.redirectTo}>{item.name}</Link>
-      </ForYouButton>
-    );
-  }
+          <Link href={item.redirectTo}>{item.name}</Link>
+        </ForYouButton>
+      );
+    }
 
-  return (
+    return (
     <ItemTitle active={isActive} onClick={onClick}>
-      <Link href={item.redirectTo}>{item.name}</Link>
-    </ItemTitle>
-  );
+        <Link href={item.redirectTo}>{item.name}</Link>
+      </ItemTitle>
+    );
 };
 
 export default function ItemNavbar() {
