@@ -58,6 +58,12 @@ const AuthCallbackPage = () => {
           window.location.href = "/sign-up?error=failed to login";
           return;
         }
+
+        if (error.response?.request.responseURL.includes("token")) {
+          //   If there is token problem, attempt to login agaain
+          window.location.href = "/login?error=failed to obtain token";
+          return;
+        }
       }
     }
   };
