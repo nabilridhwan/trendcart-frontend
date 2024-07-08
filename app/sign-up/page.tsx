@@ -2,6 +2,8 @@
 import { AuthAPIService } from "@/services/auth/auth-api-service";
 import { SignUpBody } from "@/types/services/auth";
 import React, { useEffect, useState } from "react";
+import { AxiosError } from "axios";
+import login = AuthAPIService.login;
 
 interface userDataProps {
   open_id: string;
@@ -11,12 +13,12 @@ interface userDataProps {
 }
 
 export default function SignUp() {
-  const [userData, setUserData] = useState<userDataProps>();
+  const [userData, setUserData] = useState<userDataProps | null>(null);
   const [formData, setFormData] = useState({
-    username: userData?.display_name || "",
+    username: "",
     email: "",
     country_id: "",
-    open_id: userData?.open_id || "",
+    open_id: "",
     address_line1: "",
     address_line2: "",
     city: "",
@@ -26,10 +28,22 @@ export default function SignUp() {
   });
 
   useEffect(() => {
-    const getUserData = localStorage?.getItem("tokenData");
-    if (getUserData) {
-      setUserData(JSON.parse(getUserData));
-    }
+    console.log("userData", userData);
+    if (!userData) return;
+
+    setFormData({
+      ...formData,
+      username: userData.display_name || "",
+      open_id: userData.open_id || "",
+    });
+  }, [userData]);
+
+  useEffect(() => {
+    const getUserData = localStorage.getItem("tokenData");
+
+    if (!getUserData) return;
+
+    setUserData(JSON.parse(getUserData));
   }, []);
 
   const handleChange = (
@@ -61,7 +75,31 @@ export default function SignUp() {
       },
     };
     console.log(signupBody);
-    await AuthAPIService.signup(signupBody);
+
+    try {
+      const res = await AuthAPIService.signup(signupBody);
+
+      console.log("signup", res);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log("error", error);
+        if (error.response?.status === 409) {
+          if (!userData) {
+            alert("Can't access userData property");
+            return;
+          }
+
+          //   If user already exists, log them in
+          const loginRes = await login({
+            tiktok_access_token: userData?.access_token || "",
+          });
+
+          const authToken = loginRes.data.data;
+          localStorage.setItem("authToken", authToken);
+          window.location.href = "/home";
+        }
+      }
+    }
   };
 
   return (
@@ -77,7 +115,7 @@ export default function SignUp() {
         </div>
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
           <div>
-            <label className="block text-gray-700">Username</label>
+            <label className="block text-gray-700">Name</label>
             <input
               type="text"
               name="username"

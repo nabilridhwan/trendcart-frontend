@@ -27,32 +27,22 @@ export namespace AuthAPIService {
       const res = response.data as ObtainTokenSuccessResponse;
       return res;
     } catch (error) {
-      console.error("Error logging in:", error);
-      return;
+      console.error("Error obtaining tiktok access token:", error);
+      throw error;
     }
   }
 
   export async function login(body: LoginBody) {
-    try {
-      const url = `/api/auth/login`;
-      const response = await apiService.post(url, body);
-      return response;
-    } catch (error) {
-      console.error("Error logging in:", error);
-      return;
-    }
+    const response = await apiService.post("/api/auth/login", body);
+    return response;
   }
 
   export async function signup(body: SignUpBody) {
-    try {
-      const url = `/api/auth/signup`;
-      await apiService.post(url, body);
-      const getUserData = localStorage.getItem("tokenData");
-      const { access_token } = JSON.parse(getUserData || "");
-      await login({ tiktok_access_token: access_token });
-    } catch (error) {
-      console.error("Error signing up:", error);
-      return;
-    }
+    const res = await apiService.post("/api/auth/signup", body);
+    // const getUserData = localStorage.getItem("tokenData");
+    // const { access_token } = JSON.parse(getUserData || "");
+    // await login({ tiktok_access_token: access_token });
+
+    return res;
   }
 }
