@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import {
   Container,
-  Main,
-  Item1,
   Item2,
   Item3,
   Item4,
   Item5,
+  Main,
   RadioContainer,
   RadioInput,
   RadioLabel,
 } from "./home-carousel.styles";
-import image from "../../public/images/7037524.jpg";
 
 const Carousel: React.FC = () => {
   const [position, setPosition] = useState(1);
@@ -37,14 +34,14 @@ const Carousel: React.FC = () => {
   return (
     <Container>
       <Main>
-        <Item1 position={position}>1</Item1>
-        <Item2 position={position}>2</Item2>
-        <Item3 position={position}>3</Item3>
-        <Item4 position={position}>4</Item4>
-        <Item5 position={position}>5</Item5>
+        {/*<Item1 position={position}></Item1>*/}
+        <Item2 position={position}></Item2>
+        <Item3 position={position}></Item3>
+        <Item4 position={position}></Item4>
+        <Item5 position={position}></Item5>
       </Main>
       <RadioContainer>
-        {[1, 2, 3, 4, 5].map((value) => (
+        {[1, 2, 3, 4].map((value) => (
           <React.Fragment key={value}>
             <RadioInput
               type="radio"

@@ -21,14 +21,9 @@ export namespace ProductAPIService {
   }
 
   export async function getForYouRecommendations() {
-    try {
-      const url = `/api/recommendation/for-you`;
-      const response = await apiService.get(url);
-      return response.data as GetProductsSuccessResponse;
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      throw error;
-    }
+    const url = `/api/recommendation/for-you`;
+    const response = await apiService.get(url);
+    return response.data as GetProductsSuccessResponse;
   }
 
   export async function getSimilarProducts(product_id: number) {

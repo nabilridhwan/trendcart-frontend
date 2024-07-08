@@ -26,14 +26,20 @@ export default function Login() {
   };
 
   return (
-    <div className={"bg-darkblue h-screen flex items-center justify-center"}>
+    <div
+      className={"bg-darkblue h-screen flex items-center justify-center p-4"}
+    >
       <ToastContainer />
       <div
         className={
-          "bg-white p-5 w-fit font-semibold flex flex-col items-center gap-3 rounded-2xl"
+          "bg-white p-5 w-fit font-semibold flex flex-col items-center gap-3 rounded-2xl text-center"
         }
       >
         <h1>Welcome to TrendCart</h1>
+        <p className={"text-sm"}>
+          To have personalized recommendations and view products, you need to
+          login with your TikTok account
+        </p>
         <LoginButton
           variant="shadow"
           startContent={<Logo />}

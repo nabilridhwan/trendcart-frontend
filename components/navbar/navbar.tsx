@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarContent, NavbarItem } from "@nextui-org/react";
 import Logo from "@/public/icons/logo.svg";
 import {
@@ -13,6 +13,8 @@ interface NavbarProps {
 }
 
 export default function Navbar({ searchQuery = "" }: NavbarProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [query, setQuery] = useState(searchQuery);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -30,9 +32,22 @@ export default function Navbar({ searchQuery = "" }: NavbarProps) {
     window.location.href = "/login";
   };
 
+  const handleLogin = () => {
+    localStorage.removeItem("tokenData");
+    window.location.href = "/login";
+  };
+
   const handleGoHome = () => {
     window.location.href = "/home";
   };
+
+  useEffect(() => {
+    const t = localStorage.getItem("authToken");
+
+    if (t) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <NavBarWrapper>
@@ -78,9 +93,15 @@ export default function Navbar({ searchQuery = "" }: NavbarProps) {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="end">
         <NavbarItem>
-          <LogoutButton onClick={handleLogout} radius={"sm"}>
-            Logout
-          </LogoutButton>
+          {isLoggedIn ? (
+            <LogoutButton onClick={handleLogout} radius={"sm"}>
+              Logout
+            </LogoutButton>
+          ) : (
+            <LogoutButton onClick={handleLogin} radius={"sm"}>
+              Login
+            </LogoutButton>
+          )}
         </NavbarItem>
       </NavbarContent>
     </NavBarWrapper>

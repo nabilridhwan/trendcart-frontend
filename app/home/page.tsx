@@ -6,13 +6,10 @@ import NavBar from "@/components/navbar/navbar";
 import ItemNavbar from "@/components/navbar/secondary-navbar";
 import { ProductAPIService } from "@/services/products/products-api-services";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/components/auth/AuthContext";
-import { redirect } from "next/navigation";
 import SearchNavbar from "@/components/navbar/search-navbar";
 
 export default function Home() {
   const [priceDealProducts, setPriceDealProducts] = useState<any[]>([]);
-  const { isLoggedIn } = useAuth();
 
   const getPriceDeals = async () => {
     try {
@@ -31,13 +28,6 @@ export default function Home() {
   useEffect(() => {
     getPriceDeals();
   }, []);
-
-  if (!isLoggedIn) {
-    return redirect("/login");
-  }
-  // } else {
-  //   return redirect("/home");
-  // }
 
   return (
     <>

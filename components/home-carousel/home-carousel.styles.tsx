@@ -24,34 +24,35 @@ export const Item = styled.div`
   transition: transform 0.5s ease;
 `;
 
-export const Item1 = styled(Item)<{ position: number }>`
-  background-color: #90f1ef;
-  background-image: url("../../public/images/img1.jpg");
-  transform: ${(props) => `translateX(calc(${props.position - 1} * -100%))`};
-`;
+// export const Item1 = styled(Item)<{ position: number }>`
+//   background-color: #90f1ef;
+//   object-fit: cover;
+//   background-image: url("/images/img1.jpg");
+//   transform: ${(props) => `translateX(calc(${props.position - 1} * -100%))`};
+// `;
 
 export const Item2 = styled(Item)<{ position: number }>`
-  background-image: url("../../public/images/img2.jpeg");
+  background-image: url("/images/img2.jpeg");
   background-color: #ff70a6;
   transform: ${(props) => `translateX(calc(${props.position - 2} * -100%))`};
 `;
 
 export const Item3 = styled(Item)<{ position: number }>`
-  background-image: url("../../public/images/img3.jpeg");
+  background-image: url("/images/img3.jpeg");
   background-color: #ff9770;
-  transform: ${(props) => `translateX(calc(${props.position - 3} * -100%))`};
+  transform: ${(props) => `translateX(calc(${props.position - 1} * -100%))`};
 `;
 
 export const Item4 = styled(Item)<{ position: number }>`
-  background-image: url("../../public/images/img4.jpeg");
+  background-image: url("/images/img4.jpeg");
   background-color: #ffd670;
-  transform: ${(props) => `translateX(calc(${props.position - 4} * -100%))`};
+  transform: ${(props) => `translateX(calc(${props.position - 3} * -100%))`};
 `;
 
 export const Item5 = styled(Item)<{ position: number }>`
-  background-image: url("../../public/images/img5.jpg");
+  background-image: url("/images/img5.jpg");
   background-color: #e9ff70;
-  transform: ${(props) => `translateX(calc(${props.position - 5} * -100%))`};
+  transform: ${(props) => `translateX(calc(${props.position - 4} * -100%))`};
 `;
 
 export const RadioContainer = styled.div`
@@ -63,7 +64,7 @@ export const RadioInput = styled.input`
   display: none;
 
   &:checked + label {
-    color: #333;
+    color: #555;
   }
 `;
 

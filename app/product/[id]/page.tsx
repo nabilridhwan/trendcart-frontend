@@ -1,6 +1,6 @@
 "use client";
 import NavBar from "@/components/navbar/navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "@/components/rating";
 import { ProductAPIService } from "@/services/products/products-api-services";
 import { BarLoader } from "react-spinners";
@@ -18,6 +18,7 @@ export default function ProductDetailPage({
   params: { id: string };
 }) {
   const id = +params.id;
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["product", "similar", id],
     queryFn: async () => {
@@ -74,8 +75,20 @@ export default function ProductDetailPage({
     setQuantity(rating);
   };
 
+  useEffect(() => {
+    const t = localStorage.getItem("authToken");
+
+    if (!t) {
+      window.location.href = "/login";
+    }
+  }, []);
+
   if (productIsLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={"my-20 flex justify-center items-center text-center"}>
+        Loading product details...
+      </div>
+    );
   }
 
   return (
