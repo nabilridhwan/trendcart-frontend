@@ -9,30 +9,43 @@ const AuthCallbackPage = () => {
 
   const handleAuthCallback = async () => {
     const code = searchParams.get("code");
-    const scopes = searchParams.get("scopes");
-    const state = searchParams.get("state");
+    // const scopes = searchParams.get("scopes");
+    // const state = searchParams.get("state");
 
     try {
-      const response = await AuthAPIService.obtainAccessToken({
+      const obtainTokenResponse = await AuthAPIService.obtainAccessToken({
         redirect_uri: process.env.NEXT_PUBLIC_TIKTOK_DEV_REDIRECT_URI || "",
         code: code || "",
       });
 
-      console.log(response);
+      if (obtainTokenResponse?.statusCode !== 200) {
+        window.location.href = "/login?error=failed to obtain token";
+        return;
+      }
 
-      // if (response?.statusCode === 200) {
-      //   await AuthAPIService.postLogin({
-      //     tiktok_access_token: response.data.access_token,
-      //   });
-      //   const tokenData = {
-      //     open_id: response.data.open_id,
-      //     access_token: response.data.access_token,
-      //     avatar_url: response.data.avatar_url,
-      //     display_name: response.data.display_name,
-      //   };
-      //
-      //   localStorage?.setItem("tokenData", JSON.stringify(tokenData));
-      // }
+      const loginRes = await AuthAPIService.postLogin({
+        tiktok_access_token: obtainTokenResponse.data.access_token,
+      });
+
+      // If the user was able to login, we can store the token data in local storage
+      const tokenData = {
+        open_id: obtainTokenResponse.data.open_id,
+        access_token: obtainTokenResponse.data.access_token,
+        avatar_url: obtainTokenResponse.data.avatar_url,
+        display_name: obtainTokenResponse.data.display_name,
+      };
+
+      localStorage.setItem("tokenData", JSON.stringify(tokenData));
+
+      if (loginRes?.status !== 200) {
+        //   If the login failed, means the user is not registered
+        window.location.href = "/sign-up?error=failed to login";
+        return;
+      }
+
+      const authToken = loginRes.data.data;
+      localStorage.setItem("authToken", authToken);
+      window.location.href = "/home";
     } catch (error) {
       console.error("Error occurred:", error);
     }
