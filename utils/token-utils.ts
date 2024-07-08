@@ -7,10 +7,10 @@
 // };
 
 export const getToken = () => {
-  return localStorage?.getItem("authToken");
+  return localStorage.getItem("authToken");
 };
 
 export const clearToken = () => {
-  localStorage?.removeItem("authToken");
+  localStorage.removeItem("authToken");
   window.location.href = "/login";
 };

@@ -12,10 +12,13 @@ apiService.interceptors.request.use(
   async (
     config: InternalAxiosRequestConfig<any>,
   ): Promise<InternalAxiosRequestConfig<any>> => {
-    const newToken = getToken();
-    if (newToken) {
-      config.headers.Authorization = `Bearer ${newToken}`;
+    console.log("GETTING TOKEN");
+    const tokenFromStorage = getToken();
+
+    if (tokenFromStorage) {
+      config.headers.Authorization = `Bearer ${tokenFromStorage}`;
     }
+
     return config;
   },
   async (error): Promise<any> => {
@@ -24,21 +27,21 @@ apiService.interceptors.request.use(
   },
 );
 
-apiService.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      window.location.href = "/login";
-    } else if (
-      error.response?.status === 400 &&
-      error.response?.data.message === "User not found"
-    ) {
-      window.location.href = "/sign-up";
-    }
-    return await Promise.reject(error);
-  },
-);
+// apiService.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   async (error) => {
+//     if (error.response?.status === 401 || error.response?.status === 403) {
+//       window.location.href = "/login";
+//     } else if (
+//       error.response?.status === 400 &&
+//       error.response?.data.message === "User not found"
+//     ) {
+//       window.location.href = "/sign-up";
+//     }
+//     return await Promise.reject(error);
+//   },
+// );
 
 export default apiService;

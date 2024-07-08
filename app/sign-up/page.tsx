@@ -1,6 +1,6 @@
 "use client";
 import { AuthAPIService } from "@/services/auth/auth-api-service";
-import { ObtainTokenSuccessResponse, SignUpBody } from "@/types/services/auth";
+import { SignUpBody } from "@/types/services/auth";
 import React, { useEffect, useState } from "react";
 
 interface userDataProps {
@@ -33,7 +33,7 @@ export default function SignUp() {
   }, []);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -61,7 +61,7 @@ export default function SignUp() {
       },
     };
     console.log(signupBody);
-    await AuthAPIService.postSignUp(signupBody);
+    await AuthAPIService.signup(signupBody);
   };
 
   return (

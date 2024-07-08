@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { LoginBox, LoginButton, PageWrapper } from "@/app/login/login.styles";
+import { LoginButton } from "@/app/login/login.styles";
 import { ToastContainer } from "react-toastify";
 import Logo from "@/public/icons/tiktok.svg";
 
@@ -26,9 +26,13 @@ export default function Login() {
   };
 
   return (
-    <PageWrapper>
+    <div className={"bg-darkblue h-screen flex items-center justify-center"}>
       <ToastContainer />
-      <LoginBox shadow="lg" radius={"sm"}>
+      <div
+        className={
+          "bg-white p-5 w-fit font-semibold flex flex-col items-center gap-3 rounded-2xl"
+        }
+      >
         <h1>Welcome to TrendCart</h1>
         <LoginButton
           variant="shadow"
@@ -37,7 +41,7 @@ export default function Login() {
         >
           Sign in with TikTok
         </LoginButton>
-      </LoginBox>
-    </PageWrapper>
+      </div>
+    </div>
   );
 }

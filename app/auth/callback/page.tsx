@@ -13,7 +13,7 @@ const AuthCallbackPage = () => {
     // const state = searchParams.get("state");
 
     try {
-      const obtainTokenResponse = await AuthAPIService.obtainAccessToken({
+      const obtainTokenResponse = await AuthAPIService.obtainTikTokAccessToken({
         redirect_uri: process.env.NEXT_PUBLIC_TIKTOK_DEV_REDIRECT_URI || "",
         code: code || "",
       });
@@ -23,7 +23,7 @@ const AuthCallbackPage = () => {
         return;
       }
 
-      const loginRes = await AuthAPIService.postLogin({
+      const loginRes = await AuthAPIService.login({
         tiktok_access_token: obtainTokenResponse.data.access_token,
       });
 

@@ -1,14 +1,18 @@
-import type { Metadata } from "next";
+"use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthContextProvider } from "@/components/auth/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "TrendCart",
-  description: "Find your next product with us!",
-};
+// export const metadata: Metadata = {
+//   title: "TrendCart",
+//   description: "Find your next product with us!",
+// };
+
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -27,7 +31,11 @@ export default function RootLayout({
         rel="stylesheet"
       />
       <Suspense>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <QueryClientProvider client={queryClient}>
+            <AuthContextProvider>{children}</AuthContextProvider>
+          </QueryClientProvider>
+        </body>
       </Suspense>
     </html>
   );
