@@ -10,6 +10,21 @@ import { GetProductSuccessData } from "@/types/services/product";
 export default function ForYouPage() {
   const [dailyPicks, setDailyPicks] = useState<GetProductSuccessData[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hasForYouContent, setHasForYouContent] = useState<boolean>(true);
+
+  const getPopularProducts = async () => {
+    try {
+      const getProducts = await ProductAPIService.getProducts();
+      if (getProducts) {
+        const slicedData = getProducts.data.slice(0, 6);
+        setDailyPicks(slicedData);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching popular products:", error);
+    }
+  };
+
   const getDailyPickProducts = async () => {
     try {
       const getProducts = await ProductAPIService.getForYouRecommendations();
@@ -18,7 +33,10 @@ export default function ForYouPage() {
         setIsLoading(false);
       }
     } catch (error) {
+      setHasForYouContent(false);
       console.error("Error fetching for you recommendations products:", error);
+
+      getPopularProducts();
     }
   };
 
@@ -47,6 +65,14 @@ export default function ForYouPage() {
           toColor={"to-pink-300"}
           items={dailyPicks}
         />
+      )}
+
+      {!hasForYouContent && (
+        <p className={"text-center my-5 italic"}>
+          We&apos;re sorry, we couldn&apos;t find any recommendations for you.
+          Here are some popular products instead. We&apos;ll recommend products
+          once you view more items.
+        </p>
       )}
 
       <Footer />
