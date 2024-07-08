@@ -105,8 +105,8 @@ export default function SignUp() {
       if (error instanceof AxiosError) {
         console.log("error", error);
         if (error.response?.status === 409) {
-          if (!userData) {
-            alert("Can't access userData property");
+          if (!signupBody.tiktok_open_id) {
+            alert("Can't sign up because has no tiktok_open_id");
             return;
           }
 
