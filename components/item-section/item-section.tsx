@@ -21,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <img
         src={product.ProductImage[0]?.image_url}
         alt={product.name}
-        className="w-[auto] rounded-3xl"
+        className="max-w-[200px] max-h-[200px] rounded-3xl aspect-square object-cover"
       />
       <div className={"m-2 text-xs"}>
         <p>{product.name}</p>
@@ -31,7 +31,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             rating={
               product.Reviews.reduce(
                 (prev: number, curr) => prev + curr.rating,
-                0
+                0,
               ) / product.Reviews.length
             }
           />
