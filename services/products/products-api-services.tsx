@@ -31,6 +31,12 @@ export namespace ProductAPIService {
     }
   }
 
+  export async function getSimilarProducts(product_id: number) {
+    const url = `/api/recommendation/similar/${product_id}`;
+    const response = await apiService.get(url);
+    return response.data.data as GetProductsSuccessResponse["data"];
+  }
+
   export async function getProducts(params: GetProductsParams = {}) {
     try {
       const { query, price_high, price_low } = params;
@@ -59,14 +65,9 @@ export namespace ProductAPIService {
   }
 
   export async function getOneProduct(product_id: number) {
-    try {
-      const url = `/api/product/${product_id}`;
-      const response = await apiService.get(url);
-      return response.data as GetOneProductSuccessResponse;
-    } catch (error) {
-      console.error("Error a product:", error);
-      return;
-    }
+    const url = `/api/product/${product_id}`;
+    const response = await apiService.get(url);
+    return response.data.data as GetOneProductSuccessResponse["data"];
   }
 
   export async function postReview(product_id: number, body: ReviewObject) {

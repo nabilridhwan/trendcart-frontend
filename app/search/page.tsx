@@ -7,6 +7,7 @@ import { ProductAPIService } from "@/services/products/products-api-services";
 import { useEffect, useState } from "react";
 import { GetProductSuccessData } from "@/types/services/product";
 import { BarLoader } from "react-spinners";
+import SearchNavbar from "@/components/navbar/search-navbar";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -56,7 +57,9 @@ export default function SearchPage() {
 
   return (
     <>
-      <NavBar searchQuery={decodeURI(query)} />
+      <NavBar />
+
+      <SearchNavbar searchQuery={decodeURI(query)} />
       <ItemNavbar />
 
       <div className={"container mx-auto my-4"}>
@@ -75,7 +78,17 @@ export default function SearchPage() {
           </div>
         )}
 
-        <div className={"grid grid-cols-5 col-span-4 gap-2"}>
+        {!loading && products && products.length === 0 && (
+          <div
+            className={
+              "my-[200px] w-fit mx-auto flex flex-col items-center gap-10"
+            }
+          >
+            <p>No products found for &quot;{query}&quot;</p>
+          </div>
+        )}
+
+        <div className={"grid md:grid-cols-5 col-span-4 gap-2"}>
           {products &&
             products.map((product) => (
               <ProductCard key={product.product_id} product={product} />

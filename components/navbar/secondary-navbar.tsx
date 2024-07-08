@@ -23,41 +23,41 @@ const itemsArray: Item[] = [
     name: "For you",
     redirectTo: "/for-you",
   },
-  {
-    key: "beauty",
-    name: "Beauty",
-    redirectTo: "#",
-  },
-  {
-    key: "toys",
-    name: "Toys",
-    redirectTo: "#",
-  },
-  {
-    key: "jewellery",
-    name: "Jewellery",
-    redirectTo: "#",
-  },
-  {
-    key: "food",
-    name: "Food",
-    redirectTo: "#",
-  },
-  {
-    key: "household",
-    name: "Household",
-    redirectTo: "#",
-  },
-  {
-    key: "entertainment",
-    name: "Entertainment",
-    redirectTo: "#",
-  },
-  {
-    key: "accessories",
-    name: "Accessories",
-    redirectTo: "#",
-  },
+  // {
+  //   key: "beauty",
+  //   name: "Beauty",
+  //   redirectTo: "#",
+  // },
+  // {
+  //   key: "toys",
+  //   name: "Toys",
+  //   redirectTo: "#",
+  // },
+  // {
+  //   key: "jewellery",
+  //   name: "Jewellery",
+  //   redirectTo: "#",
+  // },
+  // {
+  //   key: "food",
+  //   name: "Food",
+  //   redirectTo: "#",
+  // },
+  // {
+  //   key: "household",
+  //   name: "Household",
+  //   redirectTo: "#",
+  // },
+  // {
+  //   key: "entertainment",
+  //   name: "Entertainment",
+  //   redirectTo: "#",
+  // },
+  // {
+  //   key: "accessories",
+  //   name: "Accessories",
+  //   redirectTo: "#",
+  // },
 ];
 
 interface NavItemProps {
@@ -67,19 +67,19 @@ interface NavItemProps {
 }
 
 const NavItem = ({ item, isActive, onClick }: NavItemProps) => {
-    if (item.key === "for-you") {
-      return (
-      <ForYouButton radius="none" active={isActive} onClick={onClick}>
-          <Link href={item.redirectTo}>{item.name}</Link>
-        </ForYouButton>
-      );
-    }
-
+  if (item.key === "for-you") {
     return (
-    <ItemTitle active={isActive} onClick={onClick}>
+      <ForYouButton radius="none" active={isActive} onClick={onClick}>
         <Link href={item.redirectTo}>{item.name}</Link>
-      </ItemTitle>
+      </ForYouButton>
     );
+  }
+
+  return (
+    <ItemTitle active={isActive} onClick={onClick}>
+      <Link href={item.redirectTo}>{item.name}</Link>
+    </ItemTitle>
+  );
 };
 
 export default function ItemNavbar() {

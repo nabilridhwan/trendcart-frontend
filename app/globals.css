@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-nextjs-portal {
-    display: none;
-}
+/*nextjs-portal {*/
+/*    display: none;*/
+/*}*/
 
 /*:root {*/
 /*  --foreground-rgb: 0, 0, 0;*/

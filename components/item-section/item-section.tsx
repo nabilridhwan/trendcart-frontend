@@ -21,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <img
         src={product.ProductImage[0]?.image_url}
         alt={product.name}
-        className="max-w-[200px] md:w-auto rounded-3xl aspect-square object-cover"
+        className="sm:max-w-[150px] md:max-w-[300px] lg:max-w-[300px] max-h-[150px] rounded-3xl aspect-square object-cover"
       />
       <div className={"m-2 text-xs"}>
         <p>{product.name}</p>
@@ -70,7 +70,7 @@ const ItemSection = ({
         className={`bg-gradient-radial ${fromColor} ${toColor} rounded-2xl p-7`}
       >
         <div
-          className={"grid lg:grid-cols-6 gap-10 rounded-2xl bg-white/40 p-10"}
+          className={"grid lg:grid-cols-4 gap-10 rounded-2xl bg-white/40 p-10"}
         >
           {items &&
             items.map((item) => (

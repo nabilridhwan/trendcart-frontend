@@ -40,9 +40,7 @@ export const SearchWrapper = styled(NavbarItem)`
 `;
 
 export const SearchBox = styled(Input)`
-  width: 50vw;
   color: black;
-  position: relative;
 `;
 
 export const SearchText = styled.span`
@@ -56,7 +54,6 @@ export const SearchButton = styled(Button)`
   font-size: 0.9rem;
   font-weight: 500;
   color: white;
-  height: 4vh;
 `;
 
 export const LogoutButton = styled(Button)`
@@ -92,9 +89,15 @@ export const ForYouButton = styled(Button)<IItemProps>`
   color: white;
   font-weight: 550;
   font-size: medium;
-  text-shadow: 0.8px 0.8px 0 #f60457, -0.8px -0.8px 0 #f60457,
-    0.8px -0.8px 0 #f60457, -0.8px 0.8px 0 #f60457, 0.8px 0 0 #f60457,
-    -0.8px 0 0 #f60457, 0 0.8px 0 #f60457, 0 -0.8px 0 #f60457;
+  text-shadow:
+    0.8px 0.8px 0 #f60457,
+    -0.8px -0.8px 0 #f60457,
+    0.8px -0.8px 0 #f60457,
+    -0.8px 0.8px 0 #f60457,
+    0.8px 0 0 #f60457,
+    -0.8px 0 0 #f60457,
+    0 0.8px 0 #f60457,
+    0 -0.8px 0 #f60457;
   width: auto;
   justify-content: center;
   button {

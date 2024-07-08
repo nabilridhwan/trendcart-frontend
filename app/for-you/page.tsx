@@ -6,6 +6,7 @@ import Footer from "@/components/footer/footer";
 import { ProductAPIService } from "@/services/products/products-api-services";
 import { useEffect, useState } from "react";
 import { GetProductSuccessData } from "@/types/services/product";
+import SearchNavbar from "@/components/navbar/search-navbar";
 
 export default function ForYouPage() {
   const [dailyPicks, setDailyPicks] = useState<GetProductSuccessData[]>();
@@ -47,6 +48,7 @@ export default function ForYouPage() {
   return (
     <>
       <NavBar />
+      <SearchNavbar />
       <ItemNavbar />
 
       {isLoading && (

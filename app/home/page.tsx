@@ -8,6 +8,7 @@ import { ProductAPIService } from "@/services/products/products-api-services";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/components/auth/AuthContext";
 import { redirect } from "next/navigation";
+import SearchNavbar from "@/components/navbar/search-navbar";
 
 export default function Home() {
   const [priceDealProducts, setPriceDealProducts] = useState<any[]>([]);
@@ -41,6 +42,7 @@ export default function Home() {
   return (
     <>
       <NavBar />
+      <SearchNavbar />
       <ItemNavbar />
       <Carousel />
       <ItemSection

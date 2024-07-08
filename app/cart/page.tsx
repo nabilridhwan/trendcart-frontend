@@ -1,20 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import SearchIcon from "@/public/icons/search.svg";
-import UserIcon from "@/public/icons/placeholder.svg"; // Replace with actual UserIcon component
-import {
-  LogoutButton,
-  NavBarWrapper,
-  NavBrandWrapper,
-  NavTitle,
-  SearchBox,
-  SearchButton,
-  SearchWrapper,
-} from "@/components/navbar/navbar.styles";
 import ItemNavbar from "@/components/navbar/secondary-navbar";
 import Footer from "@/components/footer/footer";
 import Navbar from "@/components/navbar/navbar";
+import SearchNavbar from "@/components/navbar/search-navbar";
 
 const placeholderLogo = "/path/to/placeholder/logo.png";
 
@@ -47,7 +37,7 @@ const Cart = () => {
 
   const cartTotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
 
   const handleRemoveItem = (id: number) => {
@@ -57,6 +47,8 @@ const Cart = () => {
   return (
     <div className="page-container flex flex-col min-h-screen min-w-screen">
       <Navbar />
+
+      <SearchNavbar />
       <ItemNavbar />
       <div className="content-wrapper p-8 bg-white shadow-xl rounded-lg m-8 flex-grow">
         <h2 className="text-2xl font-bold mb-6 text-center">Shopping Cart</h2>

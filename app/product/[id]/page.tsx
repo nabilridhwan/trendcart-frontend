@@ -1,10 +1,12 @@
 "use client";
 import NavBar from "@/components/navbar/navbar";
-import ItemNavbar from "@/components/navbar/secondary-navbar";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Rating from "@/components/rating";
 import { ProductAPIService } from "@/services/products/products-api-services";
-import { GetProductSuccessData } from "@/types/services/product";
+import { BarLoader } from "react-spinners";
+import { useQuery } from "@tanstack/react-query";
+import ProductCard from "@/components/product-card";
+import SearchNavbar from "@/components/navbar/search-navbar";
 
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -16,23 +18,23 @@ export default function ProductDetailPage({
   params: { id: string };
 }) {
   const id = +params.id;
-  const [product, setProduct] = useState<GetProductSuccessData>();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["product", "similar", id],
+    queryFn: async () => {
+      return await ProductAPIService.getSimilarProducts(id);
+    },
+  });
 
-  const getProductDetails = async () => {
-    try {
-      const getProduct = await ProductAPIService.getOneProduct(id);
-      if (getProduct) {
-        const product = getProduct.data;
-        setProduct(product);
-      }
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
-
-  useEffect(() => {
-    getProductDetails();
-  }, []);
+  const {
+    data: product,
+    isLoading: productIsLoading,
+    isError: productIsError,
+  } = useQuery({
+    queryKey: ["product", id],
+    queryFn: async () => {
+      return await ProductAPIService.getOneProduct(id);
+    },
+  });
 
   // const product = SAMPLE_PRODUCT;
 
@@ -72,10 +74,14 @@ export default function ProductDetailPage({
     setQuantity(rating);
   };
 
+  if (productIsLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <NavBar />
-      <ItemNavbar />
+      <SearchNavbar />
 
       <div className={"container mx-auto my-4"}>
         <div className={"grid md:grid-cols-2"}>
@@ -186,6 +192,41 @@ export default function ProductDetailPage({
               ))}
             </div>
           </div>
+        </div>
+
+        <div
+          className={
+            "m-4 my-4 rounded-2xl p-5 border-1 border-black/10 space-y-2"
+          }
+        >
+          <h3 className={"text-xl font-bold"}>
+            We think you&apos;ll love these too!
+          </h3>
+
+          {isLoading && (
+            <div
+              className={
+                "py-10 space-y-3 flex flex-col items-center text-center"
+              }
+            >
+              <p>Hold on... We&apos;re getting the best recommendations!</p>
+              <BarLoader />
+            </div>
+          )}
+
+          {isError && <p>Error fetching similar products. Try again later?</p>}
+
+          {!isLoading && data && data.length === 0 && (
+            <p>No similar products found.</p>
+          )}
+
+          {data && (
+            <div className={"grid md:grid-cols-5 col-span-4 gap-2"}>
+              {data.map((product) => (
+                <ProductCard key={product.product_id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
