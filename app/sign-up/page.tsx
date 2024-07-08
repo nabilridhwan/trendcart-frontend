@@ -3,6 +3,7 @@ import { AuthAPIService } from "@/services/auth/auth-api-service";
 import { SignUpBody } from "@/types/services/auth";
 import React, { useEffect, useState } from "react";
 import { AxiosError } from "axios";
+import { useSearchParams } from "next/navigation";
 import login = AuthAPIService.login;
 
 interface userDataProps {
@@ -13,6 +14,7 @@ interface userDataProps {
 }
 
 export default function SignUp() {
+  const searchParams = useSearchParams();
   const [userData, setUserData] = useState<userDataProps | null>(null);
   const [formData, setFormData] = useState({
     username: "",
@@ -37,6 +39,15 @@ export default function SignUp() {
       tiktok_open_id: userData.open_id || "",
     });
   }, [userData]);
+
+  useEffect(() => {
+    if (searchParams.get("open_id")) {
+      setFormData({
+        ...formData,
+        tiktok_open_id: searchParams.get("open_id") || "",
+      });
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const getUserData = localStorage.getItem("tokenData");

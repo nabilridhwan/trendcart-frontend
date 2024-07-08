@@ -13,6 +13,8 @@ const AuthCallbackPage = () => {
     // const scopes = searchParams.get("scopes");
     // const state = searchParams.get("state");
 
+    let tokenData: Record<string, string> = {};
+
     try {
       const obtainTokenResponse = await AuthAPIService.obtainTikTokAccessToken({
         redirect_uri: process.env.NEXT_PUBLIC_TIKTOK_DEV_REDIRECT_URI || "",
@@ -24,17 +26,17 @@ const AuthCallbackPage = () => {
         return;
       }
 
-      const loginRes = await AuthAPIService.login({
-        tiktok_access_token: obtainTokenResponse.data.access_token,
-      });
-
       // If the user was able to login, we can store the token data in local storage
-      const tokenData = {
+      tokenData = {
         open_id: obtainTokenResponse.data.open_id,
         access_token: obtainTokenResponse.data.access_token,
         avatar_url: obtainTokenResponse.data.avatar_url,
         display_name: obtainTokenResponse.data.display_name,
       };
+
+      const loginRes = await AuthAPIService.login({
+        tiktok_access_token: obtainTokenResponse.data.access_token,
+      });
 
       localStorage.setItem("tokenData", JSON.stringify(tokenData));
 
@@ -42,7 +44,8 @@ const AuthCallbackPage = () => {
 
       if (loginRes.status > 201) {
         //   If the login failed, means the user is not registered
-        window.location.href = "/sign-up?error=failed to login";
+        window.location.href =
+          "/sign-up?error=failed to login&open_id=" + tokenData.open_id;
         return;
       }
 
@@ -55,7 +58,8 @@ const AuthCallbackPage = () => {
       if (error instanceof AxiosError) {
         if (error.response?.request.responseURL.includes("login")) {
           //   If the login failed, means the user is not registered
-          window.location.href = "/sign-up?error=failed to login";
+          window.location.href =
+            "/sign-up?error=failed to login&open_id=" + tokenData.open_id;
           return;
         }
 
