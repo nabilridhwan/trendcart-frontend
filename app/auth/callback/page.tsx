@@ -3,6 +3,7 @@
 import { AuthAPIService } from "@/services/auth/auth-api-service";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 const AuthCallbackPage = () => {
   const searchParams = useSearchParams();
@@ -50,6 +51,14 @@ const AuthCallbackPage = () => {
       window.location.href = "/home";
     } catch (error) {
       console.error("Error occurred:", error);
+
+      if (error instanceof AxiosError) {
+        if (error.response?.request.responseURL.includes("login")) {
+          //   If the login failed, means the user is not registered
+          window.location.href = "/sign-up?error=failed to login";
+          return;
+        }
+      }
     }
   };
 
