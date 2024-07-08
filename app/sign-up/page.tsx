@@ -16,6 +16,9 @@ interface userDataProps {
 export default function SignUp() {
   const searchParams = useSearchParams();
   const [userData, setUserData] = useState<userDataProps | null>(null);
+  const [tiktokAccessToken, setTiktokAccessToken] = useState<string | null>(
+    null,
+  );
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -46,6 +49,10 @@ export default function SignUp() {
         ...formData,
         tiktok_open_id: searchParams.get("open_id") || "",
       });
+    }
+
+    if (searchParams.get("tiktok_access_token")) {
+      setTiktokAccessToken(searchParams.get("tiktok_access_token"));
     }
   }, [searchParams]);
 
@@ -112,7 +119,7 @@ export default function SignUp() {
 
           //   If user already exists, log them in
           const loginRes = await login({
-            tiktok_access_token: userData?.access_token || "",
+            tiktok_access_token: tiktokAccessToken || "",
           });
 
           const authToken = loginRes.data.data;

@@ -44,8 +44,7 @@ const AuthCallbackPage = () => {
 
       if (loginRes.status > 201) {
         //   If the login failed, means the user is not registered
-        window.location.href =
-          "/sign-up?error=failed to login&open_id=" + tokenData.open_id;
+        window.location.href = `/sign-up?error=failed to login&open_id=${tokenData.open_id}&tiktok_access_token=${tokenData.access_token}`;
         return;
       }
 
@@ -58,8 +57,7 @@ const AuthCallbackPage = () => {
       if (error instanceof AxiosError) {
         if (error.response?.request.responseURL.includes("login")) {
           //   If the login failed, means the user is not registered
-          window.location.href =
-            "/sign-up?error=failed to login&open_id=" + tokenData.open_id;
+          window.location.href = `/sign-up?error=failed to login&open_id=${tokenData.open_id}&tiktok_access_token=${tokenData.access_token}`;
           return;
         }
 
