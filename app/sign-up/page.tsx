@@ -79,6 +79,16 @@ export default function SignUp() {
     try {
       const res = await AuthAPIService.signup(signupBody);
 
+      // If the request went through, log the user in
+
+      const loginRes = await login({
+        tiktok_access_token: userData?.access_token || "",
+      });
+
+      const authToken = loginRes.data.data;
+      localStorage.setItem("authToken", authToken);
+      window.location.href = "/home";
+
       console.log("signup", res);
     } catch (error) {
       if (error instanceof AxiosError) {
