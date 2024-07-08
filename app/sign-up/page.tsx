@@ -18,7 +18,7 @@ export default function SignUp() {
     username: "",
     email: "",
     country_id: "",
-    open_id: "",
+    tiktok_open_id: "",
     address_line1: "",
     address_line2: "",
     city: "",
@@ -34,7 +34,7 @@ export default function SignUp() {
     setFormData({
       ...formData,
       username: userData.display_name || "",
-      open_id: userData.open_id || "",
+      tiktok_open_id: userData.open_id || "",
     });
   }, [userData]);
 
@@ -63,7 +63,7 @@ export default function SignUp() {
       name: formData.username,
       email: formData.email,
       country_id: 200,
-      tiktok_open_id: formData.open_id,
+      tiktok_open_id: formData.tiktok_open_id,
       address: {
         address_line1: formData.address_line1,
         address_line2: formData.address_line2,

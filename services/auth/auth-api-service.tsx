@@ -21,15 +21,10 @@ export namespace AuthAPIService {
   }
 
   export async function obtainTikTokAccessToken(body: ObtainAccessTokenBody) {
-    try {
-      const url = `/api/auth/tiktok/token`;
-      const response = await apiService.post(url, body);
-      const res = response.data as ObtainTokenSuccessResponse;
-      return res;
-    } catch (error) {
-      console.error("Error obtaining tiktok access token:", error);
-      throw error;
-    }
+    const url = `/api/auth/tiktok/token`;
+    const response = await apiService.post(url, body);
+    const res = response.data as ObtainTokenSuccessResponse;
+    return res;
   }
 
   export async function login(body: LoginBody) {
