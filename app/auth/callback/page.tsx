@@ -7,36 +7,38 @@ import { useEffect } from "react";
 const AuthCallbackPage = () => {
   const searchParams = useSearchParams();
 
+  const handleAuthCallback = async () => {
+    const code = searchParams.get("code");
+    const scopes = searchParams.get("scopes");
+    const state = searchParams.get("state");
+
+    try {
+      const response = await AuthAPIService.obtainAccessToken({
+        redirect_uri: process.env.NEXT_PUBLIC_TIKTOK_DEV_REDIRECT_URI || "",
+        code: code || "",
+      });
+
+      console.log(response);
+
+      // if (response?.statusCode === 200) {
+      //   await AuthAPIService.postLogin({
+      //     tiktok_access_token: response.data.access_token,
+      //   });
+      //   const tokenData = {
+      //     open_id: response.data.open_id,
+      //     access_token: response.data.access_token,
+      //     avatar_url: response.data.avatar_url,
+      //     display_name: response.data.display_name,
+      //   };
+      //
+      //   localStorage?.setItem("tokenData", JSON.stringify(tokenData));
+      // }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+
   useEffect(() => {
-    const handleAuthCallback = async () => {
-      const code = searchParams.get("code");
-      const scopes = searchParams.get("scopes");
-      const state = searchParams.get("state");
-
-      try {
-        const response = await AuthAPIService.obtainAccessToken({
-          redirect_uri: process.env.NEXT_PUBLIC_TIKTOK_DEV_REDIRECT_URI || "",
-          code: code || "",
-        });
-
-        if (response?.statusCode === 200) {
-          await AuthAPIService.postLogin({
-            tiktok_access_token: response.data.access_token,
-          });
-          const tokenData = {
-            open_id: response.data.open_id,
-            access_token: response.data.access_token,
-            avatar_url: response.data.avatar_url,
-            display_name: response.data.display_name,
-          };
-
-          localStorage?.setItem("tokenData", JSON.stringify(tokenData));
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
-    };
-
     handleAuthCallback();
   }, [searchParams]);
 
