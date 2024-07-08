@@ -37,7 +37,9 @@ const AuthCallbackPage = () => {
 
       localStorage.setItem("tokenData", JSON.stringify(tokenData));
 
-      if (loginRes?.status !== 200) {
+      console.log("loginRes", loginRes);
+
+      if (loginRes.status > 201) {
         //   If the login failed, means the user is not registered
         window.location.href = "/sign-up?error=failed to login";
         return;
