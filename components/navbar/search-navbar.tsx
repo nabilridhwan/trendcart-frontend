@@ -46,6 +46,7 @@ export default function SearchNavbar({
 
           <div className={"grid grid-cols-2 gap-2"}>
             <SearchButton
+              className={"bg-brand/70"}
               title="We use your search query to find products that match your interests."
               onClick={(e) => {
                 e.stopPropagation();
@@ -56,7 +57,11 @@ export default function SearchNavbar({
             >
               AI Search
             </SearchButton>
-            <SearchButton startContent={<RiSearch2Line />} type="submit">
+            <SearchButton
+              className={"bg-brand"}
+              startContent={<RiSearch2Line />}
+              type="submit"
+            >
               Search
             </SearchButton>
           </div>

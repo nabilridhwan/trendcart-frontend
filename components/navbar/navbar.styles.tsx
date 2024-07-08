@@ -49,7 +49,6 @@ export const SearchText = styled.span`
 `;
 
 export const SearchButton = styled(Button)`
-  background-color: #f60457;
   padding: 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
