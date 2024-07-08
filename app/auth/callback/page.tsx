@@ -18,7 +18,7 @@ const AuthCallbackPage = () => {
         code: code || "",
       });
 
-      if (obtainTokenResponse.statusCode !== 200) {
+      if (obtainTokenResponse.statusCode > 201) {
         window.location.href = "/login?error=failed to obtain token";
         return;
       }
