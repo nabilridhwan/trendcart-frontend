@@ -29,7 +29,8 @@ export default function Navbar({ searchQuery = "" }: NavbarProps) {
 
   const handleLogout = () => {
     localStorage.removeItem("tokenData");
-    window.location.href = "/login";
+    localStorage.removeItem("authToken");
+    window.location.href = "/home";
   };
 
   const handleLogin = () => {
